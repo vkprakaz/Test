@@ -1,0 +1,498 @@
+#include <curl/curl.h>
+#include <curl/types.h>
+#include <curl/easy.h>
+#include <iostream>
+//#define URL "http://esc1w98m7:9200/mockprdequity/ProductEquityParam/MYAAPL_EQ?pretty"
+#define URL "http://lxdm728m7:9200/client_tokens/Tokens/machine1"
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+  ((std::string *) userp)->append((char *) contents, size * nmemb);
+  return size * nmemb;
+}
+
+int func(char const *url) {
+ CURL *curl = curl_easy_init ();
+  std::cout<<"hello"<<url;
+  std::string readBuffer;
+  if (curl)
+    {
+      curl_easy_setopt (curl, CURLOPT_URL, url);
+      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    /* passing the pointer to the response as the callback parameter */
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    curl_easy_setopt(curl, CURLOPT_USERPWD,"elastic:search");
+     /* ask libcurl to show us the verbose output */
+  curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+      //curl_easy_setopt (curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+     // curl_easy_setopt (curl, CURLOPT_CUSTOMREQUEST, "POST");
+      
+//std::cout<<"JSON DATA"<<url<<std::endl;
+
+      CURLcode res = curl_easy_perform (curl);
+                 std::cout<<"Result From PrintJson ["<<res<<"]";
+                std::cout<<"Result String"<<readBuffer;
+      curl_easy_cleanup (curl);
+    }
+std::string dataFoundStr("\"found\":true");
+   std::size_t dataFoundFlg = readBuffer.find(dataFoundStr);
+  if (dataFoundFlg == std::string::npos)
+  {
+    std::cout<<"Failure Case  readbuffer"<<readBuffer<< dataFoundFlg;
+    return -1;
+  }
+  else
+  {
+        std::cout<<"Success Case Prd is present in Elastic server  and  readbuffer"<<readBuffer<<dataFoundFlg;
+    return 0;
+  }
+
+}
+int main() {
+char url[255];
+char jsondata[255];
+sprintf(url,"http://esc1w98m7:9200/mockprdequity/_refresh"); 
+ func(URL); }
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <syslog.h>
+#include<iostream>
+#include<fstream>
+
+using namespace std;
+
+static void skeleton_daemon()
+{
+    pid_t pid;
+
+    /* Fork off the parent process */
+    pid = fork();
+
+        cout<<"2First daemon started."<<endl;
+    /* An error occurred */
+    if (pid < 0)
+        exit(EXIT_FAILURE);
+
+    /* Success: Let the parent terminate */
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+
+    /* On success: The child process becomes session leader */
+    if (setsid() < 0)
+        exit(EXIT_FAILURE);
+
+    /* Catch, ignore and handle signals */
+    //TODO: Implement a working signal handler */
+    signal(SIGCHLD, SIG_IGN);
+    signal(SIGHUP, SIG_IGN);
+
+    /* Fork off for the second time*/
+    pid = fork();
+
+    /* An error occurred */
+    if (pid < 0)
+        exit(EXIT_FAILURE);
+
+    /* Success: Let the parent terminate */
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+
+    /* Set new file permissions */
+    umask(0);
+
+    /* Change the working directory to the root directory */
+    /* or another appropriated directory */
+    chdir("/");
+
+    /* Close all open file descriptors */
+    int x;
+    for (x = sysconf(_SC_OPEN_MAX); x>=0; x--)
+    {
+        close (x);
+    }
+    /* Open the log file */
+    openlog ("firstdaemon", LOG_PID, LOG_DAEMON);
+        cout<<"3First daemon started."<<endl;
+}
+
+int main()
+{
+        cout<<"1First daemon started."<<endl;
+    skeleton_daemon();
+
+    while (1)
+    {
+        //TODO: Insert daemon code here.
+        syslog (LOG_NOTICE, "First daemon started.");
+        cout<<"First daemon started."<<endl;
+        ofstream outfile ; 
+        outfile.open("./test.txt");
+        outfile << "Data"; 
+        sleep (20);
+       // break;
+    }
+
+    cout<<"First daemon terminated."<<endl;
+    closelog();
+
+    return EXIT_SUCCESS;
+}
+
+#!/bin/sh
+CURL_CMD='curl -H "Content-Type: application/json"' ;
+url='http://lxdm728m7.etrade.com:9200';
+Schema='{ "mappings": { "Tokens": {"properties": {"Token":{"type": "integer"}}}} }';
+Define_Schema="$CURL_CMD -XPUT -u elastic:search '$url/client_tokens' -d '$Schema'";
+Delete_Schema="$CURL_CMD -XDELETE -u elastic:search '$url/client_tokens'";
+
+echo "Deleiting Elastic Search schema for Client Authentication tokens ";
+echo;
+echo $Delete_Schema ;
+eval $Delete_Schema;
+echo "Creating Elastic Search schema for Client Authentication tokens ";
+echo;
+echo $Define_Schema ;
+eval $Define_Schema;
+for i in `seq 1 100`; do
+Data='{"Token":';
+Add_Data="$CURL_CMD -XPUT -u elastic:search '$url/client_tokens/Tokens/machine1' -d '$Data$i}'";
+echo "Adding Client Authentication tokens to Elastic search server";
+echo;
+echo $Add_Data ;
+eval $Add_Data;
+done
+
+
+
+
+
+Design Specification
+
+Version 1.0
+
+
+
+
+
+Machine Statistics System
+A Client Statistics analysis tool
+
+
+
+
+Version 1.0
+
+
+Revision History
+Version	Summary of Changes	Date
+1.0 	Machine  Statistics System – Server & Client Details	8/1/2018
+
+ 
+Table of Contents
+
+1.	Introduction 
+2.	High Level Requirement Analysis	
+3.	System Architecture  
+4.	Design Considerations
+a.	Assumptions and Dependencies
+b.	Goals and Guidelines   
+5.	Detailed Sub System Design    
+a.	Client Component
+b.	Server Component 
+c.	Database Component 
+6.	Prerequisites and System Configuration details
+7.	Policies and Tactics 
+8.	Glossary
+9.	Acronyms and Abbreviations
+10.	Bibliography
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.	Introduction 
+This document is designed to be a reference for any person wishing to implement or any person interested in the architecture of the Machine Statistics system application.  This document describes each application’s architecture and sub-architecture their associated interfaces, database schemas, and the motivations behind the chosen design.  Both high-level and low-level designs are included in this document.
+
+This document should be read by an individual with a technical background and has experience reading data flow diagrams (DFDs), control flow diagrams (CFDs), interface designs, and development experience in object oriented programming . 
+
+2.	High Level Requirement Analysis
+
+	Machine Statistics System Application main aim is to collect the statistics of the all the machines in network (Like virtual memory, CPU usage, hardware memory, process status  ...etc.) and use it for future purpose.
+	It consists of Server Application (Running in Sever machine: Authenticate Client, Processing received SMTP mail and store the Statistics to Data Base) and Client Application (Running in Client machines: Collects system statistics, sending statistics data as SMTP mail to Server Application).
+	Machine Statistics System should collect client systems data in certain intervals say for 5 minutes and send it to centralized server machine to store it in Data base. All these stated actions, collection of client system data and sending is done in same network.
+	Dedicated Server Application running in one server machine in same network is responsible for processing and storing the statistics data send by client machines and authentication of the client systems with the usage of Elastic Search Server CURL requests calls.
+	Server Application main objectives are 1.Effective Authentication of Client Machines, 2.Processing and Storing of the Client machine’s data effectively.
+	Client Application main objectives are collecting the system data effectively and successfully sending the statistics data to server machine in certain intervals.
+	Machine Statistics System should have proper logging system to capture all actions/events.
+	Machine Statistics System should have proper unit test cases written and verified in available common either of the technologies like Cucumber, GTEST (Google tester).
+
+
+
+
+
+
+
+
+3.	System Architecture   
+
+ 
+Machine Statistics System consists of these below parts:
+a.	Client Application:  Running in Client machines, Collects system statistics, sending statistics data as SMTP mail to Server Application in regular intervals.
+b.	Server Application: Running in Sever machine, Client Authentication, Processing received SMTP mail and store the Statistics to Data Base
+c.	Unit Test module:  Consists of all positive/negative test case scenarios for both server and client application written using GTEST (Google Test framework). These test cases is for both server and client, should run at the start of application to make sure all necessary configuration settings are in place.
+
+
+
+
+
+
+
+
+
+4.	Design Considerations
+This section describes many of the issues that needed to be addressed or resolved before attempting to devise a complete design solution.
+
+4.1. Assumptions and Dependencies
+Machine Statistics System is implemented using available freely distributed technologies/tools to void any dependency on costly Licenses. It mainly consists of Linux O.S (Centos 16.X), Postfix SMTP mail server, ElasticSearch, Xerces libraries, Curl libraries, MySQL CPP connector libraries, Google Test Framework.
+
+4.2. Goals and Guidelines   
+The major goal of the Machine Statistics System is that it be extremely simple and intuitive to use.  
+This system will provide complete statistics about the machines that are connected in network and will be used as monitoring tool to monitor about machines health status.
+Since its needs to be implemented only using freely distributed technologies/tools, Linux oriented technologies/tools are the obvious choice. And selected technologies/tools should have proper community support.
+All the tools listed in specifications section must be installed in server machine and should be in running condition as described in attached README document.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5.	Detailed Sub System Design    
+
+5.1. Client Component 
+Client Application main objective is to authenticate itself to server, collects the system Statistics, create simple text mail containing the data and successfully send the system data mail to SMTP server employing CURL requests.
+	Client Configuration during startup: Client configuration saved in client.xml file and during startup of client application , these xml file will parsed, mapped to respective client values such as client ID, server details, FROM mail address, To mail address, Elastic Search server details.
+	After successfully read the ID details from client configuration xml file, It will query the Elastic search server using curl requests.
+	Once the client is started up and Authenticated to server as stated in above steps, it will begin to collect to system statistics like (virtual memory, CPU usage, Process status, hardware memory) details and create simple text mail with collected data in it.
+	Curl is used to send the SMTP mail to Server postfix SMTP mail server.
+	Once it successfully sent the mail data to server, it will wait for 5 minutes interval to start again. Above steps will repeat again.
+	Logging Function
+Logging function will capture both error messages and file position (__FILE__,__LINE__) error thrown. It will log it along with date and time.
+Implementation of logging function as follows, 
+
+
+
+
+	Unit Test Cases
+
+Unit test cases for server application is written and tested in GTest (Google Test Framework). It was designed to be trigged during server application startup and every successful make build.
+Implementation of GTest Unit Test cases as follows, 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5.2. Server Component 
+	Daemon Server Process start Fucntion
+Daemon server process start is start of sever application in server machine application and main aim is to create clean daemon job.
+It consists of below steps.
+	Fork off the parent process & let it terminate if forking was successful. -> Because the parent process has terminated, the child process now runs in the background.
+	setsid - Create a new session. The calling process becomes the leader of the new session and the process group leader of the new process group. The process is now detached from its controlling terminal (CTTY).
+	Catch signals - Ignore and/or handle signals.
+	fork again & let the parent process terminate to ensure that you get rid of the session leading process. (Only session leaders may get a TTY again.)
+	chdir - Change the working directory of the daemon.
+	umask - Change the file mode mask according to the needs of the daemon.
+	close - Close all open file descriptors that may be inherited from the parent process.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	Authentication Function 
+ 
+During start of the server application setup, setup script will create Elastic search server schema and will insert the necessary client data to it.
+It consists of below steps. 
+	Create Elastic Search schema , 
+
+{ "mappings": { "ClientTokens": {"properties": {"ClientData":{"type": "integer"}}}} } 
+
+	Add the Client authentication tokens to Elastic Search server
+	Client Application will call to this Elastic search server to authenticate itself during start up using curl http request calls. 
+	Mail processing Function
+ 
+Once server is started as Daemon process, it will monitor the incoming mails in periodic phase .Once the server received the client mail with system Statistics data, 
+ProcessMail.sh shell script will process all the mails and will insert/update the client’s data MySQL Database.
+It involves below steps: 
+	Server Application will monitor for new client mails with statistics data.
+	Once the Client mail received in server’s PostFix SMTP server, ProcessMail.sh script will read the mails and stored the client systems’ data to text file.
+	Processed client statistics data will be stored in to MySQL Server data base.
+	If the client information is exiting already, client data will be updated. 
+	ProcessMail.sh Script will delete the old mails once the client data successfully stored in Database.
+	All the actions stated above captured in log files.
+	If any unexpected failure happens, server application will log the error and started again to process the client mails.
+
+
+	Logging Function
+Logging function will capture both error messages and file position (__FILE__,__LINE__) error thrown. It will log it along with date and time.
+Implementation of logging function as follows, 
+
+
+	Unit Test Cases
+
+Unit test cases for server application is written and tested in GTest (Google Test Framework). It was designed to be trigged during server application startup and every successful make build.
+Implementation of GTest Unit Test cases as follows, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5.3. Database Component
+	Data Base Configuration: Once the MySQL server successfully installed and service is up and running, my_db_setup.sh script will be automatically invoked to create new data base, user and table.
+	Script as follows,
+
+	Client_Data table schema as follows,
+
+
+
+
+
+
+6.	Prerequisites and System Configuration details
+
+This section describes about Machine Statistics System application prerequisites and configuration components necessary to build and run successfully.
+In server host machine ServerSetup.sh script should be executed first to install and configure necessary components. Upon successful run of ServerSetup.sh script , Server machine should have below application installed, up and running.
+	Host O.S in network 		:  Linux  - Ubuntu 14.X or higher
+	Elastic Search   		:  1.6 Version or higher
+	PostFix SMTP 			:  Latest  available version in Repository
+	Xerces Libraries 		: Latest  available version in Repository
+	Curl Libraries 			: Latest  available version in Repository
+	Google Test Framework	: 1.8 Latest Version in Repository
+	MySql CPP connector libraries : Latest available version in Repository
+
+7.	Policies and Tactics 
+This design was attempted to be made as modular as possible.  This provides flexibility between component developments.  In design, we attempted to partition the development into sections that each individual could create independent of another, and have a clearly defined interface between components.  This would make compilation of the client and server applications trivial.  For example, the communications components work together, and are nearly independent of the data that they are transferring.  With a clearly defined interface for the communications components, integration of these components is made simple and painless.
+
+This design also took the policy of using coding standards such as standard C++ variable prefixes and caption.  Generally method/property purposes are easily deciphered by their descriptive name.
+
+
+8.	Glossary
+Machine Statistics System will provide the statistics about the machines in same network.
+Client Application will send system statistics to SMTP mail server.
+Server Application will process the mail and store it in Data base.
+Google Test will run during startup of client/server applications and successful compilation. 
+
+9.	Acronyms and Abbreviations
+GTest	  	 : Google Test 
+CURL		 : Client URL Request Library
+SMTP		: Simple Mail Transfer Protocol
+
+10.	Bibliography
+Machine Statistics System Version 1.0 
+Software Engineer		Prakash Kumarasamy
+
+
+
+
+
+
+
+
