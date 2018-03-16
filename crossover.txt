@@ -1,0 +1,724 @@
+BHWPA7255B
+
+996834022074
+
+1. Dangling pointers and Memory Leak : 
+    Proper allocation/de-allocation of memory is most important.And I knew when to use deep copy or shallow copy for nested structures and proper allocation/de-allocation of memory.
+    I will use profiling tools like vagrind, insure, GNU gprof to detect memory issues. 
+
+2. Improper Error handling  : 
+   Every project should have proper error handling for all kind of error/warning scenarios.
+   I will use code coverage tools like covtool, gcov, Bullseye Coverage detect  Improper Error handling's.
+   And will use Cucumber, Google test frameworks to write automated test cases.
+
+3. Performance Impact : 
+   In loops , we can use prefix operator instead of post fix operator. Repeated addition of same header files will impact pre-processing time. Proper use of dynamic library to reduce binary size and to have less boot up time.
+  I will use static analyzing tools like CPPCheck ,Clang Static Analyzer, 
+
+
+  
+  
+   What was the problem and the impact of it?
+our customers recently complained about the application crashing in peak hours. 
+This led to customer dissatisfaction and project revenues as well.
+What were the solutions considered and final choice?
+I have tasked to find the root cause of the problem and solutions for the same.And listed the options as 1. decentralize the major modules and move towards micro service architecture to have better reliability 2. Find the re-used objects and to use it as libraries to improve the boot up time 3. Increase the Infrastructure support (RAM,Storage.. )
+Final choice come down to 1. decentralize the major modules  2. Find the re-used objects and to create libraries to improve the boot up time
+What was the outcome?
+I decentralized the major modules and changed to micro services architecture and deployed libraries. This led to drastic improvement in application reliability and performance.
+What did you learn from solving this problem and what would you re-use in your future projects?
+I have learned new way of managing code and created new architecture in system.
+Learned pros/cons of both  monolithic / micolithic architecture and powerful usage of libraries. 
+
+
+Issue in recent Project : 
+    In my recent project Software Development Life Cycle , during QA phase one major feature change required which will impact all the major modules in whole system.
+Escalated the issue or attempted to resolve it on your own first?
+   So i did brain storming session to choose either to extend the project time or request for additional resources to match up the dead line or create automated test suite to verify the impact.
+Any actions you took or suggestions you made to minimise possible impact
+  I have calculated effort estimations for above three options and concluded that creation of automated test suite will be the best option in terms of project deadline, reliability, code quality.(Have learned and created automated test suite in Cucumber Framework in short time)
+What was the outcome and what did you learn from it?
+  I need to do brainstorming session during crisis time and should ready to learn new technologies in short time to overcome issues.
+
+
+  1. First I will  look for the application purpose, various features, impact in whole system and behavior (different inputs/outputs ) through Wiki/Design document/flow charts/Confluence pages.
+2. If any test data is present or based on help document ,I will use it to understand the application completely by working on it as a user/tester.
+3. After I understood the application purpose /features workflow , then I will track the each feature in source code and create wiki pages for new feature design ,impacts in existing features.
+
+1. I will use profiling tools like vagrind, insure, GNU gprof to detect memory issues.
+2. I will use Cucumber, Google test frameworks to write automated/unit test cases.
+3. I will static analyzing tools like CPPCheck ,Clang Static Analyzer, 
+
+Once I completed the any feature/code part , first i will run profiling tools to check for memory issues.
+Second I will write cucumber /gtest test cases to verify features/impact.
+Third , I will  use static analyzing tools to improve performance/code quality.
+And last I will integrate those automated test cases with code coverage tools like gcov to have sustainable test report.
+
+
+Question 1
+Not yet answered
+Marked out of 1.00
+Not flaggedFlag question
+Question text
+What is your view on having a fully automated CICD strategy?
+
+Select one:
+a. Theoretically it is a good practice but difficult to achieve and I haven’t really seen it working in practice
+ b. Achievable with the right tools, people and process in place
+c. Not really achievable
+Question 2
+Not yet answered
+Marked out of 1.00
+Not flaggedFlag question
+Question text
+What is your view on Metrics to drive process and Engineering teams?
+
+Select one:
+a. Metrics may be one of the tools to use to measure teams and take decisions however they are subjective and therefore subject to interpretation
+ b. Metrics may be used as a key driver in objective decision making
+ c. Engineering teams cannot really be measured by metrics since they are creative people and need to be free to take decisions as they work
+Question 3
+Not yet answered
+Marked out of 1.00
+Not flaggedFlag question
+Question text
+
+
+How much hands on Software Development experience do you have?
+
+Select one:
+a. Between 0 and 2 years
+b. Between 2 and 3 years
+c. Between 3 and 5 years
+ d. Over 5 years
+ 
+ Which operator is having the highest precedence?
+
+Select one:
+postfix     ===?
+unary
+shift
+equality
+
+Which of the following is/are automatically added to every class, if we do not write our own?
+
+Select one:
+a. A copy constructor
+b. An assignment operator
+c. A constructor without any parameters
+d. All of the above
+
+Which of the following is true?
+
+Select one:
+a. Static methods cannot be overloaded.  ==?
+b. Static data members can only be accessed by static methods.
+c. Non-static data members can be accessed by static methods.
+d. Static methods can only access static members (data and methods).  ===? 
+
+
+Which of the following is FALSE about references in C++?
+
+Select one:
+a. References cannot be NULL.
+b. A reference must be initialised when declared.
+c. Once a reference is created, it cannot be later made to reference another object; it cannot be reset.
+d. A reference cannot refer to a constant value.  ==??
+
+An incomplete definition of a thread-safe stack using a mutex is given below. All its member variables are included in the definition, but only the empty member function is defined.
+class locked_stack {
+public:
+   void push(int x);
+   int pop();
+   bool empty() const;
+private:
+   std::stack<int> content;
+   mutable std::mutex mut;
+};
+
+bool locked_stack::empty() const; {
+   std::lock_guard<std::mutex> guard(mut);
+   return content.empty()
+}
+Select all that apply:
+
+Select one or more:
+a. The following pop member function definition does not cause any deadlocks. int locked_stack::pop() { std::locked_guard<std::mutex> guard(mut); if (empty()) throw empty_stack_exception(); int x = content.top; content.pop(); return x; }
+b. The std::mutex member variable mut is made mutable so that its state can be altered even in const member functions of locked_stack.
+c. std::lock_guard<std::mutex> is used to guarantee that other threads can lock the mutex while it (the lock_guard) is in scope.
+d. An exception thrown while std::lock_guard<std::mutex> is in scope always causes a deadlock.
+e. The following pop member function definition does not cause any deadlocks. int locked_stack::pop() { std::locked_guard<std::mutex> guard(mut); if (content.empty()) throw empty_stack_exception(); int x = content.top; content.pop(); return x; }
+
+
+#define VALUE 1+2
+int main(){
+    printf("%d %d\n",VALUE/VALUE,VALUE*3);
+    return 0;
+}
+
+class Widget {
+    ...
+}
+Widget newInstance() {
+    return Widget();
+}
+Select one:
+a. Change the method to return by reference to avoid an extra temporary copy.
+b. Change the method returning a newly allocated object, transferring its ownership to the caller.
+c. Consider using std::move to transfer the whole structure, avoiding an extra temporary copy.
+d. Do not apply any change and let the compiler use copy elision.
+
+ your C++ program deployed on an embedded device you want to communicate with an external system. The input to that system is either an integer or a character. What kind of data type should you use to represent the input for that external system?
+
+Select one:
+a. A struct.
+b. A class.
+c. A union.
+d. A set.
+
+What is the difference between structs and classes?
+
+Select one:
+a. There is no difference at all in C++ environment.
+b. Structs are supported only in C environment.
+c. Structs are allocated in the stack, classes in the other hand are allocated in the heap space.
+d. They are treated similarly, except to the access specifiers (public and private)
+
+Default file path which contains Chef stdout command line:
+
+Select one:
+a. /srv/chef/file_store/chef-client.out
+b. /var/etc/chef/chef-client.out
+c. /var/etc/chef/chef-stacktrace.out
+d. /srv/chef/file_store/chef-stacktrace.out
+
+char buf [] = "Hello world!";
+char * buf = "Hello world!";
+In terms of code generation, how do the two definitions of buf, both presented above, differ?
+Select one:
+a. The first definition certainly allows the contents of buf to be safely modified at runtime; the second definition does not.
+b. The first definition does not allocate enough space for a terminating NUL-character, nor does it append one; the second definition does.
+c. The first definition is not legal because it does not indicate the size of the array to be allocated; the second definition is legal.
+d. They are exactly same!
+
+truct node *nPtr, *sPtr;    
+/* pointers for a linked list. */ 
+for (nPtr=sPtr; nPtr; nPtr=nPtr->next) {    
+    free(nPtr);
+}
+The sample code above releases memory from a linked list. Which of the choices below accurately describes how it will work?
+Select one:
+a. It will work correctly since the for loop covers the entire list.
+b. It may fail since each node "nPtr" is freed before its next address can be accessed.
+c. In the for loop, the assignment "nPtr=nPtr->next" should be changed to "nPtr=nPtr.next".
+d. This is invalid syntax for freeing memory.
+e. The loop will never end.
+
+Let's consider we have the following main function (with the necessary header files already included):
+int main() {
+    std::size_t length = 4;
+    int* a = new int[length];
+
+    for (std::size_t i = 0; i < length; )
+        a[i] = ++i;
+    for (std::size_t i = length - 1; i >= 0; i--) 
+        std::cout << a[length - 1] << " ";
+}
+What will be the result of the above code?
+Select one:
+a. Nothing will be printed to standard output and the program will enter in a infinite cycle.
+b. "3 3 3" will be printed to standard output and the program will enter in a infinite cycle.
+c. "3 3 3" will be printed to standard output and an error will be thrown.
+d. "3 3 3" will be printed to standard output and the program will exit normally.
+e. The code does not compile.
+
+Assuming you have a graph with n nodes where each node is labeled as an unsigned integer from 0 to n - 1, an adjacency list representation of this graph could be done as a simple std::vector<std::vector<unsigned>>. Taking this and the following code snippet into account:
+using adjacency_list = std::vector<std::vector<unsigned>>;
+
+void traversal(const adjacency_list &graph, std::vector<bool> &visited, unsigned node) {
+    visited[node] = true;
+    std::cout << node << std::endl;
+    const auto &edges = graph[node];
+    for (unsigned e : edges) {
+        if (!visited[e])  {
+            traversal(graph, visited, e);
+        }
+    }
+}
+
+void traversal(const adjacency_list &graph, unsigned node) {
+    std::vector<bool> visited(graph.size());
+    traversal(graph, visited, node);
+}
+Select all that apply:
+
+Select one or more:
+a. The traversal functions implement a depth-first search.
+b. The traversal functions implement a breadth-first search.
+c. Calling the second overload of the traversal function will cause all nodes of a graph to be printed.
+d. The runtime complexity of the traversal function is linear in the number of edges.
+e. Cycles in the graph will cause nodes to be printed multiple times.
+
+Consider the array defined below:
+
+ 
+
+char ** array [12][12][12];
+ 
+
+Which one of the following definitions and initializations of p is valid?
+
+Select one:
+a. char ** (* p) [12][12] = array;    ===??
+b. char ***** p = array;
+c. char * (* p) [12][12][12] = array;
+d. const char ** p [12][12][12] = array;
+e. char (** p) [12][12] = array;
+
+hat is the proper way of opening a file for writing as binary?
+
+Select one:
+a.
+std::ofstream file; 
+file.open(“test.bin”);
+ b.
+std::ifstream file; 
+file.open(“test.bin”, std::ios::in | std::ios::out | std::binary);
+ c.
+std::ofstream file; 
+file.open(“test.bin”, ios::out);  ====?
+ d.
+std::fstream file; 
+file.open(“test.bin”, std::ios::binary);
+
+Which items below can be considered as associative arrays?
+
+Select one:
+a. std::deque and std::list.
+b. std::map and std::unordered_map.  ===>>
+c. std::string and std::vector.
+d. std::set and std::array.
+
+What is the best solution for printing a vector from the following two options:
+Option 1:
+
+vector v;
+for (auto t = v.begin(); t != v.end(); t++) {
+  t-­>print();
+}
+Option 2:
+vector v;
+for (auto t = v.begin(); t != v.end(); ++t) {
+  t-­>print();
+}
+Select one:
+a. Option 1
+b. Option 2
+c. Both are identical
+
+int a [8] = { 0, 1, 2, 3 };
+int main()
+{
+    return 0;
+}
+The definition of a above explicitly initializes its first four elements. Which one of the following describes how the compiler treats the remaining four elements?
+Select one:
+a. Standard C defines this particular behavior as implementation-dependent. The compiler writer has the freedom to decide how the remaining elements will be handled.
+b. The remaining elements are initialized to zero(0).  ==?
+c. It is illegal to initialize only a portion of the array. Either the entire array must be initialized, or no part of it may be initialized.
+d. They are left in an uninitialized state; their values cannot be relied upon.
+
+According to the code below:
+template<class Type, class Desc>
+constexpr decltype(auto) create(Desc desc) {
+    static_assert(!std::is_abstract<Type>(), "T cannot be abstract.");
+    static_assert(std::is_assignable<decltype(std::declval<Type>().getDesc()),
+                                     decltype(desc)>::value,
+                           "description can not be assigned to T description");
+    auto type = Type();
+    type.setDesc(desc);
+    return &type;
+}
+Select one:
+a. The code has no issue at all.
+b. The code uses copy elision optimization.
+c. The code has an unpredictable behavior due to wild pointer.
+d. The code does not work due to using constexpr within auto deduced t
+
+
+About the following overloaded functions:
+std::vector<std::string> table;
+using table_id = std::vector<std::string>::size_type;
+
+table_id add_to_table(const std::string &str) {
+   table_id length = table.size();
+   for (table_id i = 0; i < length; ++i) {
+       if (str == table[i])
+           return i;
+   }
+   table.push_back(str);
+   return length;
+}
+
+table_id add_to_table(std::string &&str) {
+   table_id length = table.size();
+   for (table_id i = 0; i < length; ++i) {
+       if (str == table[i])
+           return i;
+   }
+   table.push_back(str);
+   return length;
+}
+Select all that apply:
+
+Select one or more:
+a. The function always adds the str argument to the end of the vector and returns its (the string's) position in the vector.
+b. add_to_table("literal string") calls the second overload.
+c. add_to_table(std::move(some_string_variable)) calls the second overload.
+d. Assuming that moving a std::string is a constant operation, the second overload has linear runtime complexity in the size of the vector.
+e. The first overload only copies the string into the vector if necessary.
+
+
+o get the current position of the "get" or "put" pointer in bytes use?
+
+Select one:
+a. tellg()
+b. tellb()
+c. tellp()
+d. tell()
+
+int main(){
+    int a[3];
+    int *I;
+    a[0]=100;a[1]=200;a[2]=300;
+    I=a;
+    printf("%d,", ++*I);             
+    printf("%d,", *++I);             
+    printf("%d,", (*I)--);             
+    printf("%d", *I);             
+    return 0;
+}
+
+If all candidates need to have either "C++" or ".Net" in their resume, how should I indicate that in the MAT feature?
+
+Select one:
+a. Write "C++" on one line and ".Net" on the next
+b. Write "C++ OR .Net" on one line
+c. Write "C++, .NET" on one line
+
+int* x = new int[10];
+This code is an example of static binding
+Select one:
+a. True
+b. False
+
+
+In MFC the #pragma statements are required for?
+
+Select one or more:
+a. Library Files
+b. Source Files
+c. Resource Files
+d. All of them  ==?
+
+
+int main() {
+    std::thread t1([]() { std::cout << "Thread::1" << std::endl; });
+    std::thread t2([]() { std::cout << "Thread::2" << std::endl; });
+}
+Select one:
+a. The thread t1 executes first and then thread t2.
+b. The thread t2 executes first and then thread t1.
+c. Nothing will be executed due to missing join method. ==?
+d. The threads execution order is unpredictable.
+
+
+void func_print(int value) { 
+    std::cout << “int” << std::endl; ===??
+}
+void func_print(void* value) {
+    std::cout << “void” << std::endl;
+}
+
+int main() {
+    func_print(0);
+    func_print(NULL);
+}
+
+hich one of the following is valid for opening a read-only ASCII file?
+Select one:
+a. fileOpen (filenm, "r");
+b. fileOpen (filenm, "ra");
+c. fileOpen (filenm, "read");
+d. fopen (filenm, "read");
+e. fopen (filenm, "r"); ==?
+
+unsigned int fact(int x) {
+  return(x*fact(x-1));
+}
+
+int main() {  
+    int x,y=10;
+    x=4;
+    y=fact(x);
+    printf("%d\n",y);
+}
+What is the output of the code?
+Select one:
+a. 24
+b. 10
+c. 4
+d. Segmentation Fault  ==?
+
+How to make a custom container type support range-based loops?
+
+Select one:
+a. Extending from an existing STL container type, e.g std::iterator.
+b. Using <utility> header which provides the template class std::pair.
+c. Adding support to iterators through begin() and end(). ==?
+d. It is not possible using range-based loops within custom classes.
+
+The following directive is used to read type libraries:
+
+Select one:
+a. #define
+b. #using
+c. #include
+d. #import ==?
+
+The following code is said to be:
+class str_pool
+{    
+public:
+    
+    typedef std::map<std::string, std::size_t> map;
+   
+    str_pool (const map& ro_map)
+        : ro_map_ (ro_map)
+    {        
+    }
+    
+    std::size_t
+    
+    find_or_add (const std::string& s)
+    {        
+        map::const_iterator i = ro_map_.find (s);
+        
+        if (i != ro_map_.end ())
+            return i­>second_;
+        
+        i = map_.find (s);
+        
+        if (i != map_.end ())
+            return i­>second;        
+        else        
+        {            
+            auto_lock l (mutex_);            
+            std::size_t id = ro_map_.size () + map_.size () + 1;
+            map_.insert (std::make_pair (s, id));            
+        }        
+    }
+    
+private:
+    map map_;
+    const map& ro_map_;
+    mutex mutex_;    
+};
+Select one:
+a. Synchronized ==?
+b. Asynchronous
+
+Which of the function operator below cannot be overloaded?
+
+Select one:
+a. ->.
+b. [].
+c. ().
+d. ===. ==?
+
+template <class T>
+ struct sum {
+     static void foo(T op1 , T op2){
+        cout << op1 <<op2;
+     }
+ };
+
+int main() {
+    sum::foo(1,3);
+}
+Will it compile? What changes should be made for it to compile?
+Select one:
+a. It would compile fine
+b. The keyword 'static' should be removed
+c. The call should be sum<int>:: foo(1,3)   ==?
+d. The call should be sum:: <int>foo(1,3)
+
+Which item indicates default C++ class operations?
+
+Select one:
+a. Copy constructor, move constructor and destructor.
+b. Copy constructor, default constructor and comparison operations.
+c. Move assignment, copy assignment and new operation.
+d. New operation, delete operation and destructor.
+
+
+am found some discrepancies in Git code and his manager want him to analyze who did that change. Which of the below command Sam should use to make this task easy?
+https://git-scm.com/docs/git-bisect
+Select one:
+a. git-bisect ==?
+b. git-blame
+c. git-apply
+d. git-verify-pack
+
+How to create a new local branch in git?
+
+Select one:
+a. git new branchName
+b. git branch -local branchName
+c. git branch -n branchName
+d. git checkout -b branchName
+
+Which of the below statements are true for Git Clone?
+
+Select one or more:
+Git will get working copy from the server.
+It is similar to Checkout command of other VCS systems.
+Git will get a full copy of the data that the server has.
+It clones the repository to a newly created directory.
+
+What will happen if you try to run this code on a database that does not have a table named "Customers" and has been initialized using all default SQL Server settings?
+
+
+
+Select one:
+a. An error would occur related to the CREATE TABLE statement
+b. An error would occur related to the first INSERT statement
+c. An error would occur related to the second INSERT statement
+d. All of the above
+e. None of the above
+
+Check the below SQL statement-
+
+SELECT * FROM Employee a WHERE rowid = (SELECT MAX(rowid) FROM Employee b WHERE a.emp_no=b.emp_no);
+
+What would be the output of this?
+
+Select one:
+a. SQL Query to find all null rows in Database
+b. SQL query to find all unique rows in Database
+c. SQL query to find all Duplicate rows in Database
+d. Syntax Error
+
+Which of the following properties is usually an advantage of relational databases over NoSQL ones?
+
+Select one:
+a. availability
+b. partition tolerance   ===?
+c. consistency            
+d. speed
+
+
+What is the purpose of MERGE in SQL Server 2008?
+
+Select one:
+a. Merge statement allows a single statement for INSERT, DELETE and UPDATE a row that depends on a condition
+b. Merge statement allows multiple statements for INSERT, DELETE and UPDATE a row that depends on a condition
+c. Merge statement allows a single statement for INSERT, DELETE and UPDATE a row that is independant on a condition
+d. Merge statement allows multiple statements for INSERT, DELETE and UPDATE a row that is independant on a condition
+
+Which of the following is true concerning triggers?
+
+Select one:
+a. You cannot create them with SQL
+b. They execute against only some applications that access a database
+c. They have an event, condition, and action    ==?
+d. They cannot cascade (cause another trigger to fire)
+
+SQL queries usually use some values entered by the user. In this case, in order to prevent security breaches caused by these values, you may:
+
+Select one:
+a. place a firewall between the database server and the web server
+b. escape user data so that it cannot be interpreted as commands by the DBMS   ==?
+c. use stored procedures
+d. use object-oriented programming so that each query can be defined as a separate class
+
+
+Consider an array of n decimal integers named elements. We want to rearrange elements according to the following rules:
+
+Sort the integers in ascending order by the number of 1's in their binary representations. For example, 710 → 1112 and 810 → 10002, so 8 (which has single 1 in binary) would be ordered before 7 (which has triple 1's in binary).
+Two or more integers having the same number of 1's in their binary representations are ordered by increasing decimal value. For example, 510 → 1012 and 610 → 1102 both contain double 1's in their binary representation, so 5 would be ordered before 6 because it has the smaller decimal value.
+Complete the rearrange function in the editor below. It has one parameter: an array of n integers, elements. The function must sort the elements array according to the rules above and return the sorted array.
+
+Input Format:
+The internal test cases read the following input from stdin and passes it to the function:
+
+The first line contains an integer, n, denoting the number of integers in elements.
+
+Each line i of the n subsequent lines (where 0 ≤ i < n) contains an integer describing elementsi.
+
+Constraints:
+1 ≤ n ≤ 105
+1 ≤ elementsi ≤ 109
+Output Format:
+Return an array of n integers denoting the sorted elements.
+Sample Input (0):
+3
+1
+2
+3
+Sample Output (0):
+1
+2
+3
+Explanation (0):
+Given elements = [1, 2, 3]:
+
+110 → 12
+210 → 102
+310 → 112
+The decimal integers 1 and 2 both have single 1 in their binary representation, so we order them by increasing decimal value (i.e., 1 < 2). The decimal integer 3 has double 1's in its binary representation, so we order it after 1 and 2. We then return elements = [1, 2, 3] as our sorted array.
+
+Sample Input (1):
+5
+5
+3
+7
+10
+14
+Sample Output (1):
+3
+5
+10
+7
+14
+Explanation (1):
+Given elements = [5, 3, 7, 10, 14]:
+
+510 → 1012
+310 → 112
+710 → 1112
+1010 → 10102
+1410 → 11102
+The decimal integers 5, 3, and 10 have double 1's in their binary representations, so we order them by increasing decimal value (i.e., 3 < 5 < 10). The decimal integers 7 and 14 have tripe 1's in their binary representations, so we place them after 3, 5, and 10 in increasing decimal order (i.e., 7 < 14). We then return elements = [3, 5, 10, 7, 14] as our sorted array.
+
+For example:
+
+Input	Result
+3
+1
+2
+3
+1
+2
+3
+5
+5
+3
+7
+10
+14
+3
+5
+10
+7
+14
